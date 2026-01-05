@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Agent } from '../types';
 import { X, Mic } from 'lucide-react';
 import { useConvaiScript } from '../hooks/useConvaiScript';
@@ -11,14 +11,24 @@ interface AgentModalProps {
 
 export const AgentModal: React.FC<AgentModalProps> = ({ agent, onClose, isOpen }) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const [isClosing, setIsClosing] = useState(false);
   
-  // Ensure the script is loaded (it should be global, but good to ensure hook runs)
+  // Ensure the script is loaded
   useConvaiScript();
+
+  const handleClose = () => {
+    setIsClosing(true);
+    // Wait for animation to finish before calling onClose (which unmounts component)
+    setTimeout(() => {
+      onClose();
+      setIsClosing(false); 
+    }, 150);
+  };
 
   // Close on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') handleClose();
     };
 
     if (isOpen) {
@@ -30,9 +40,9 @@ export const AgentModal: React.FC<AgentModalProps> = ({ agent, onClose, isOpen }
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
-  // Trap focus inside modal (Simplified version)
+  // Trap focus inside modal
   useEffect(() => {
     if (isOpen && modalRef.current) {
       modalRef.current.focus();
@@ -43,15 +53,15 @@ export const AgentModal: React.FC<AgentModalProps> = ({ agent, onClose, isOpen }
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-stone-900/40 dark:bg-black/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
-      onClick={onClose}
+      className={`fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-stone-900/40 dark:bg-black/60 backdrop-blur-sm transition-opacity ${isClosing ? 'animate-fade-out' : 'animate-fade-in'}`}
+      onClick={handleClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
       <div 
         ref={modalRef}
-        className="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[85vh] animate-in slide-in-from-bottom-10 duration-300 focus:outline-none"
+        className={`relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[85vh] focus:outline-none ${isClosing ? 'animate-slide-down-fade' : 'animate-slide-up-fade'}`}
         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside content
         tabIndex={-1}
       >
@@ -66,7 +76,7 @@ export const AgentModal: React.FC<AgentModalProps> = ({ agent, onClose, isOpen }
             </p>
           </div>
           <button 
-            onClick={onClose}
+            onClick={handleClose}
             className="p-2 rounded-full hover:bg-stone-100 dark:hover:bg-slate-800 text-stone-500 dark:text-slate-400 transition-colors"
             aria-label="Close modal"
           >

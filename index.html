@@ -37,6 +37,7 @@
               },
               // Deep Navy Theme (Dark Mode)
               navy: {
+                600: '#475569',
                 700: '#334155',
                 800: '#1e293b',
                 900: '#0f172a',
@@ -45,31 +46,50 @@
                 darker: '#050810', // Gradient center/end
                 surface: '#131C2E', // Card surface
               },
-              // Accents
+              // Accents - Gold & Pastel
               gold: {
-                400: '#FACC15',
+                100: '#FEF9C3', // Pastel Gold
+                200: '#FEF08A',
+                300: '#FDE047',
+                400: '#FACC15', // Base Gold
                 500: '#EAB308',
                 600: '#CA8A04',
                 subtle: '#D4C5A8', // Muted gold for text
               }
             },
             animation: {
-              'fade-in': 'fadeIn 200ms ease-out',
-              'slide-in': 'slideIn 300ms ease-out',
+              'fade-in': 'fadeIn 200ms ease-out forwards',
+              'fade-out': 'fadeOut 150ms ease-in forwards',
+              'slide-up-fade': 'slideUpFade 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'slide-down-fade': 'slideDownFade 150ms ease-in forwards',
               'pulse-subtle': 'pulseSubtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'gradient-shift': 'gradientShift 8s ease infinite',
             },
             keyframes: {
               fadeIn: {
                 '0%': { opacity: '0' },
                 '100%': { opacity: '1' },
               },
-              slideIn: {
-                '0%': { transform: 'translateY(20px)', opacity: '0' },
-                '100%': { transform: 'translateY(0)', opacity: '1' },
+              fadeOut: {
+                '0%': { opacity: '1' },
+                '100%': { opacity: '0' },
+              },
+              slideUpFade: {
+                '0%': { transform: 'translateY(12px) scale(0.97)', opacity: '0' },
+                '100%': { transform: 'translateY(0) scale(1)', opacity: '1' },
+              },
+              slideDownFade: {
+                '0%': { transform: 'translateY(0) scale(1)', opacity: '1' },
+                '100%': { transform: 'translateY(12px) scale(0.97)', opacity: '0' },
               },
               pulseSubtle: {
                 '0%, 100%': { opacity: '1' },
                 '50%': { opacity: '.85' },
+              },
+              gradientShift: {
+                '0%': { backgroundPosition: '0% 50%' },
+                '50%': { backgroundPosition: '100% 50%' },
+                '100%': { backgroundPosition: '0% 50%' },
               }
             }
           }
@@ -94,7 +114,7 @@
         border-radius: 10px;
       }
       .dark ::-webkit-scrollbar-thumb {
-        background: rgba(148, 163, 184, 0.2);
+        background: rgba(250, 204, 21, 0.2); /* Subtle gold tint scrollbar in dark mode */
       }
     </style>
   <script type="importmap">
@@ -108,7 +128,7 @@
 }
 </script>
 </head>
-  <body class="bg-ivory text-stone-900 selection:bg-gold-400/30 dark:selection:bg-indigo-500/30">
+  <body class="bg-ivory text-stone-900 selection:bg-gold-400/30 dark:selection:bg-gold-500/30">
     <div id="root"></div>
   </body>
 </html>
