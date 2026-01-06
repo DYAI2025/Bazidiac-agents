@@ -8,6 +8,42 @@ interface AgentCardProps {
   onSelect: (agent: Agent) => void;
 }
 
+// Simple internal component for flag SVGs to keep the main component clean
+const FlagIcon: React.FC<{ lang: string }> = ({ lang }) => {
+  const getFlagData = (code: string) => {
+    switch (code) {
+      case 'en': return { name: 'English', path: <g><path fill="#fff" d="M0 0h640v480H0z"/><path fill="#00247d" d="M0 0h640v480H0z"/><path stroke="#fff" strokeWidth="60" d="M0 0l640 480M640 0L0 480"/><path stroke="#cf142b" strokeWidth="40" d="M0 0l640 480M640 0L0 480"/><path stroke="#fff" strokeWidth="100" d="M320 0v480M0 240h640"/><path stroke="#cf142b" strokeWidth="60" d="M320 0v480M0 240h640"/></g> };
+      case 'de': return { name: 'German', path: <g><path fill="#ffce00" d="M0 320h640v160H0z"/><path fill="#000" d="M0 0h640v160H0z"/><path fill="#d00" d="M0 160h640v160H0z"/></g> };
+      case 'fr': return { name: 'French', path: <g><path fill="#fff" d="M0 0h640v480H0z"/><path fill="#002395" d="M0 0h213.3v480H0z"/><path fill="#ed2939" d="M426.7 0H640v480H426.7z"/></g> };
+      case 'es': return { name: 'Spanish', path: <g><path fill="#AA151B" d="M0 0h640v480H0z"/><path fill="#F1BF00" d="M0 120h640v240H0z"/></g> };
+      case 'it': return { name: 'Italian', path: <g><path fill="#fff" d="M0 0h640v480H0z"/><path fill="#009246" d="M0 0h213.3v480H0z"/><path fill="#ce2b37" d="M426.7 0H640v480H426.7z"/></g> };
+      default: return { name: code, path: null };
+    }
+  };
+
+  const { name, path } = getFlagData(lang);
+
+  return (
+    <div 
+      className="relative group/flag"
+      title={name}
+    >
+      <svg 
+        viewBox="0 0 640 480" 
+        className="w-4 h-3 rounded-[1px] shadow-sm transition-all duration-300"
+        // The filter creates the bronze tint: grayscale -> sepia -> slight hue rotate for gold tone -> low contrast
+        style={{
+          filter: 'grayscale(100%) sepia(100%) hue-rotate(20deg) brightness(0.9) contrast(0.8)' 
+        }}
+      >
+        {path}
+      </svg>
+      {/* Fallback border to define shape if contrast is too low */}
+      <div className="absolute inset-0 rounded-[1px] ring-1 ring-inset ring-black/10 dark:ring-white/20 pointer-events-none mix-blend-multiply dark:mix-blend-overlay"></div>
+    </div>
+  );
+};
+
 export const AgentCard: React.FC<AgentCardProps> = ({ agent, onSelect }) => {
   return (
     <div className="group relative flex flex-col h-full bg-white/60 dark:bg-navy-900/40 backdrop-blur-md border border-stone-200/80 dark:border-white/5 rounded-2xl p-6 sm:p-8 transition-all duration-500 hover:shadow-2xl hover:shadow-gold-500/10 dark:hover:shadow-gold-500/5 hover:-translate-y-1 hover:border-gold-400/40 dark:hover:border-gold-400/30 overflow-hidden">
@@ -22,16 +58,28 @@ export const AgentCard: React.FC<AgentCardProps> = ({ agent, onSelect }) => {
 
       {/* Header */}
       <div className="relative z-10 mb-4">
-        <h3 className="text-3xl font-serif text-stone-900 dark:text-ivory-50 font-medium tracking-tight group-hover:text-amber-900 dark:group-hover:text-gold-100 transition-colors">
-          {agent.name}
-        </h3>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <h3 className="text-3xl font-serif text-stone-900 dark:text-ivory-50 font-medium tracking-tight group-hover:text-amber-900 dark:group-hover:text-gold-100 transition-colors">
+            {agent.name}
+          </h3>
+          
+          {/* Language Flags (Bronze Tinted) - Moved next to name */}
+          {agent.languages && (
+            <div className="flex items-center gap-1.5 pt-1.5 opacity-80 hover:opacity-100 transition-opacity">
+              {agent.languages.map((lang) => (
+                <FlagIcon key={lang} lang={lang} />
+              ))}
+            </div>
+          )}
+        </div>
+
         <p className="text-xs font-semibold text-stone-400 dark:text-slate-500 mt-2 uppercase tracking-widest">
           {agent.subtitle}
         </p>
       </div>
 
       {/* Description */}
-      <p className="relative z-10 text-stone-600 dark:text-ivory-200/80 leading-relaxed mb-8 font-light text-sm sm:text-base border-l-2 border-stone-100 dark:border-navy-700 pl-4">
+      <p className="relative z-10 text-stone-600 dark:text-ivory-200/80 leading-relaxed mb-6 font-light text-sm sm:text-base border-l-2 border-stone-100 dark:border-navy-700 pl-4">
         {agent.blurb}
       </p>
 

@@ -15,6 +15,7 @@ export const AGENTS: Agent[] = [
       'Precise in calculating ascendent',
       'Expert in Ba Zi and Fusion Calculation'
     ],
+    languages: ['en', 'de', 'es', 'fr', 'it'],
     elevenlabsAgentId: 'agent_9001kdhah7vrfh3rd05pakg8vppk'
   },
   {
@@ -31,6 +32,7 @@ export const AGENTS: Agent[] = [
       'Relationship & synastry focus',
       'Career & vocational astrology'
     ],
+    languages: ['en', 'de', 'es', 'fr', 'it'],
     elevenlabsAgentId: 'agent_1701kdekhhref78v6547amzrg1nb'
   }
 ];

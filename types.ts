@@ -12,5 +12,6 @@ export interface Agent {
   blurb: string;
   chips: string[];
   capabilities: string[];
+  languages: string[];
   elevenlabsAgentId: string;
 }
