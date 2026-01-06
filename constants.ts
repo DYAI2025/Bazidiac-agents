@@ -15,12 +15,12 @@ export const AGENTS: Agent[] = [
       'Precise in calculating ascendent',
       'Expert in Ba Zi and Fusion Calculation'
     ],
-    languages: ['en', 'de', 'es', 'fr', 'it'],
+    languages: ['en', 'de', 'es', 'fr', 'it', 'pt'],
     elevenlabsAgentId: 'agent_9001kdhah7vrfh3rd05pakg8vppk'
   },
   {
     id: 'luna-celestia',
-    name: 'Luna Celestia',
+    name: 'Victoria Celestia',
     voiceDescription: 'warm female voice',
     focus: 'Relationship + Career/Vocational astrology',
     eyebrow: 'CELESTIAL_RELATIONSHIP_MODULE',
@@ -32,7 +32,7 @@ export const AGENTS: Agent[] = [
       'Relationship & synastry focus',
       'Career & vocational astrology'
     ],
-    languages: ['en', 'de', 'es', 'fr', 'it'],
+    languages: ['en', 'de', 'es', 'fr', 'it', 'pt'],
     elevenlabsAgentId: 'agent_1701kdekhhref78v6547amzrg1nb'
   }
 ];

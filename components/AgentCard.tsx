@@ -17,6 +17,7 @@ const FlagIcon: React.FC<{ lang: string }> = ({ lang }) => {
       case 'fr': return { name: 'French', path: <g><path fill="#fff" d="M0 0h640v480H0z"/><path fill="#002395" d="M0 0h213.3v480H0z"/><path fill="#ed2939" d="M426.7 0H640v480H426.7z"/></g> };
       case 'es': return { name: 'Spanish', path: <g><path fill="#AA151B" d="M0 0h640v480H0z"/><path fill="#F1BF00" d="M0 120h640v240H0z"/></g> };
       case 'it': return { name: 'Italian', path: <g><path fill="#fff" d="M0 0h640v480H0z"/><path fill="#009246" d="M0 0h213.3v480H0z"/><path fill="#ce2b37" d="M426.7 0H640v480H426.7z"/></g> };
+      case 'pt': return { name: 'Portuguese', path: <g><path fill="#ff0000" d="M256 0h384v480H256z"/><path fill="#006600" d="M0 0h256v480H0z"/><circle cx="256" cy="240" r="80" fill="#ffff00" /><path fill="#fff" d="M256 195c-30 0-50 15-50 50v35c0 40 20 60 50 60s50-20 50-60v-35c0-35-20-50-50-50z"/><path fill="#ff0000" d="M256 210v115" stroke="#ff0000" strokeWidth="30"/><path fill="none" stroke="#fff" strokeWidth="10" d="M256 210v115M230 250h52"/></g> };
       default: return { name: code, path: null };
     }
   };
@@ -84,7 +85,7 @@ export const AgentCard: React.FC<AgentCardProps> = ({ agent, onSelect }) => {
       </p>
 
       {/* Chips */}
-      <div className="relative z-10 flex flex-wrap gap-2 mb-8">
+      <div className="relative z-10 flex flex-wrap gap-2 gap-y-3 mb-8">
         {agent.chips.map((chip) => (
           <Badge key={chip}>{chip}</Badge>
         ))}
