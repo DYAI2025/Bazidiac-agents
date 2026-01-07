@@ -64,7 +64,7 @@ export const AgentCard: React.FC<AgentCardProps> = ({ agent, onSelect }) => {
             {agent.name}
           </h3>
           
-          {/* Language Flags (Bronze Tinted) - Moved next to name */}
+          {/* Language Flags (Bronze Tinted) */}
           {agent.languages && (
             <div className="flex items-center gap-1.5 pt-1.5 opacity-80 hover:opacity-100 transition-opacity">
               {agent.languages.map((lang) => (
@@ -124,16 +124,16 @@ export const AgentCard: React.FC<AgentCardProps> = ({ agent, onSelect }) => {
         <span>Initialize Protocol</span>
       </button>
 
-      {/* Dynamic Gradient Glow Effect */}
+      {/* Dynamic Gradient Glow Effect - Optimized for Warm/Pastel Gold */}
       <div 
         className="
           absolute inset-0 rounded-2xl z-0 pointer-events-none
           bg-gradient-to-br 
-          from-gold-100/30 via-rose-50/20 to-sky-100/30 
-          dark:from-gold-500/10 dark:via-purple-900/10 dark:to-indigo-900/10
+          from-gold-100/40 via-rose-50/20 to-amber-100/30 
+          dark:from-gold-500/10 dark:via-purple-900/20 dark:to-indigo-900/20
           bg-[length:200%_200%]
           opacity-0 group-hover:opacity-100 
-          transition-opacity duration-1000 ease-in-out
+          transition-opacity duration-700 ease-in-out
           animate-gradient-shift
           blur-2xl
         " 
